@@ -11,6 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class sendTransactionToBank implements ShouldQueue
 {
@@ -49,10 +50,13 @@ class sendTransactionToBank implements ShouldQueue
 
         $r = Http::post('http://bank.local/api/v1/transaction', [
             'transaction' => $transaction->toArray(),
-            'hash' => $this->calculateHash($transaction->toArray())
+            'hash' => $hash = $this->calculateHash($transaction->toArray())
         ]);
 
-        dd($r->json());
+        Log::debug('Transaction sended successfully', ['data' => [
+            'transaction' => $transaction->toArray(),
+            'hash' => $hash
+        ]]);
 
     }
 
