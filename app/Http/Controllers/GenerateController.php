@@ -6,16 +6,14 @@ namespace App\Http\Controllers;
 
 use App\Jobs\sendTransactionToBank;
 use App\Transaction;
-use Faker\Factory;
-use Faker\Generator;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
 
 class GenerateController extends Controller
 {
     /**
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function generateJobs()
+    public function generateJobs(): RedirectResponse
     {
         // $numberOfTransactions = random_int(1, 20);
         $numberOfTransactions = 1;

@@ -47,17 +47,23 @@ class sendTransactionToBank implements ShouldQueue
         ]);
 
 
+        try {
+            $r = Http::post('http://bank.local/api/v1/transaction', [
+                'transaction' => $transaction->toArray(),
+                'hash' => $hash = $this->calculateHash($transaction->toArray())
+            ]);
 
-        $r = Http::post('http://bank.local/api/v1/transaction', [
-            'transaction' => $transaction->toArray(),
-            'hash' => $hash = $this->calculateHash($transaction->toArray())
-        ]);
+            Log::debug('Transaction sent successfully', ['data' => [
+                'transaction' => $transaction->toArray(),
+                'hash' => $hash,
+                'bank_response' => $r->json()
+            ]]);
 
-        Log::debug('Transaction sended successfully', ['data' => [
-            'transaction' => $transaction->toArray(),
-            'hash' => $hash
-        ]]);
-
+        } catch (\Exception $exception) {
+            Log::alert(sprintf('Remote server error code: %d, message: %s',
+                $exception->getCode(),
+                $exception->getMessage()));
+        }
     }
 
 
@@ -70,9 +76,5 @@ class sendTransactionToBank implements ShouldQueue
         }
 
         return md5($hash);
-    }
-
-    public function delay($delay)
-    {
     }
 }
