@@ -19,13 +19,13 @@ class GenerateController extends Controller
         $numberOfTransactions = 1;
 
         for ($i = 0; $i < $numberOfTransactions; ++$i) {
-            dispatch((new sendTransactionToBank($this->makeTransactions())));
+            dispatch((new sendTransactionToBank($this->makeTransaction())));
         }
 
-        return back()->with(['message' => "Транзакций отправлено: $numberOfTransactions"]);
+        return back()->with(['message' => \sprintf("Транзакций отправлено: %d", $numberOfTransactions)]);
     }
 
-    private function makeTransactions(): Transaction
+    private function makeTransaction(): Transaction
     {
 
         return (new Transaction())

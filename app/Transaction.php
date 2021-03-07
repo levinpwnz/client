@@ -29,14 +29,14 @@ class Transaction
 
     public function __toString(): string
     {
-        return \json_encode($this, JSON_THROW_ON_ERROR);
+        return \json_encode($this, JSON_THROW_ON_ERROR | JSON_FORCE_OBJECT);
     }
 
     /**
      * @param mixed $transaction_id
      * @return Transaction
      */
-    public function setTransactionId($transaction_id)
+    public function setTransactionId($transaction_id): Transaction
     {
         $this->transaction_id = $transaction_id;
         return $this;
@@ -46,7 +46,7 @@ class Transaction
      * @param mixed $orderNumber
      * @return Transaction
      */
-    public function setOrderNumber($orderNumber)
+    public function setOrderNumber($orderNumber): Transaction
     {
         $this->orderNumber = $orderNumber;
         return $this;
@@ -56,7 +56,7 @@ class Transaction
      * @param mixed $commissionFee
      * @return Transaction
      */
-    public function setCommissionFee($commissionFee)
+    public function setCommissionFee($commissionFee): Transaction
     {
         $this->commissionFee = $commissionFee;
         return $this;
@@ -66,7 +66,7 @@ class Transaction
      * @param mixed $sum
      * @return Transaction
      */
-    public function setSum($sum)
+    public function setSum($sum): Transaction
     {
         $this->sum = $sum;
         return $this;

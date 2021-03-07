@@ -60,13 +60,18 @@ class sendTransactionToBank implements ShouldQueue
             ]]);
 
         } catch (\Exception $exception) {
-            Log::alert(sprintf('Remote server error code: %d, message: %s',
+            Log::alert(\sprintf('Remote server error code: %d, message: %s',
                 $exception->getCode(),
                 $exception->getMessage()));
         }
     }
 
 
+    /**
+     * Calculate the hash of transaction
+     * @param array $data
+     * @return string
+     */
     private function calculateHash(array $data): string
     {
         $hash = '';
